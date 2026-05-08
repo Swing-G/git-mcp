@@ -64,7 +64,7 @@ test.describe("Dedicated repo servers", () => {
 
         await expect(page.getByText("fetch_generic_url_content")).toBeVisible({ timeout: 5000 });
         await page.getByText('fetch_generic_url_content').click();
-        await page.getByRole('textbox', { name: 'url', exact: true  }).fill('https://www.makeareadme.com/');
+        await page.getByRole('textbox', { name: 'url*', exact: true }).fill('https://www.makeareadme.com/');
         await page.getByRole('button', { name: 'Run Tool' }).click();
 
         await expect(page.getByText('Success')).toBeVisible({ timeout: 10000 });
