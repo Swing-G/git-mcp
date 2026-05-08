@@ -133,24 +133,11 @@ export default {
       request.headers.get("accept")?.includes("text/event-stream") &&
       !!url.pathname &&
       url.pathname !== "/";
-    const isMessage =
-      request.method === "POST" &&
-      url.pathname.includes("/message") &&
-      url.pathname !== "/message";
 
     ctx.props.requestUrl = request.url;
 
-    if (isMessage) {
-      return await MyMCP.serveSSE("/*").fetch(request, env, ctx);
-    }
-
     if (isStreamMethod) {
-      const isSse = request.method === "GET";
-      if (isSse) {
-        return await MyMCP.serveSSE("/*").fetch(request, env, ctx);
-      } else {
-        return await MyMCP.serve("/*").fetch(request, env, ctx);
-      }
+      return await MyMCP.serve("/*").fetch(request, env, ctx);
     } else {
       // Default to serving the regular page
       return requestHandler(request, {
