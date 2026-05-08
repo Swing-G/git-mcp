@@ -2,15 +2,9 @@ import { McpAgent } from "agents/mcp";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { getMcpTools } from "./api/tools";
 import { createRequestHandler } from "react-router";
-import {
-  generateBadgeResponse,
-  getRepoViewCount,
-  withViewTracking,
-} from "./api/utils/badge";
+import { generateBadgeResponse } from "./api/utils/badge";
 import { getRepoData } from "./shared/repoData";
 import { handleR2TestSetup } from "./api/test-setup";
-
-export { ViewCounterDO } from "./api/utils/ViewCounterDO";
 
 declare global {
   interface CloudflareEnvironment extends Env {
@@ -59,8 +53,7 @@ async function handleBadgeRequest(
   const url = new URL(request.url);
   const color = url.searchParams.get("color") || "aquamarine";
 
-  const count = await getRepoViewCount(env, owner, repo);
-  return generateBadgeResponse(count, color);
+  return generateBadgeResponse(0, color);
 }
 export class MyMCP extends McpAgent {
   server = new McpServer({
@@ -100,9 +93,7 @@ export class MyMCP extends McpAgent {
         tool.name,
         tool.description,
         tool.paramsSchema,
-        withViewTracking(env, ctx, repoData, async (args: any) => {
-          return tool.cb(args);
-        }),
+        async (args: any) => tool.cb(args),
         tool.annotations ? { annotations: tool.annotations } : undefined,
       );
     });
