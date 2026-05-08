@@ -20,7 +20,7 @@ const testCases = [
 ];
 
 test.describe("Dedicated repo servers", () => {
-  test.describe("SSE", () => {
+  test.describe("Streamable HTTP", () => {
     // Loop through the defined test cases
     for (const testCase of testCases) {
       const { path, expectedContentSnippet } = testCase;
@@ -30,7 +30,7 @@ test.describe("Dedicated repo servers", () => {
       test(`should list tools for ${path}`, async ({ page }) => {
         await page.goto("/");
         await page.getByRole("combobox", { name: "Transport Type" }).click();
-        await page.getByRole("option", { name: "SSE" }).click();
+        await page.getByRole("option", { name: "Streamable HTTP" }).click();
         await page.getByRole("textbox", { name: "URL" }).fill(targetServerUrl);
         await page.getByRole("button", { name: "Connect" }).click();
 
@@ -55,7 +55,7 @@ test.describe("Dedicated repo servers", () => {
       test(`should fetch documentation using generic tool for ${path}`, async ({ page }) => {
         await page.goto("/");
         await page.getByRole("combobox", { name: "Transport Type" }).click();
-        await page.getByRole("option", { name: "SSE" }).click();
+        await page.getByRole("option", { name: "Streamable HTTP" }).click();
         await page.getByRole("textbox", { name: "URL" }).fill(targetServerUrl);
         await page.getByRole("button", { name: "Connect" }).click();
 
@@ -79,7 +79,7 @@ test.describe("Dedicated repo servers", () => {
 
          await page.goto("/");
          await page.getByRole("combobox", { name: "Transport Type" }).click();
-         await page.getByRole("option", { name: "SSE" }).click();
+         await page.getByRole("option", { name: "Streamable HTTP" }).click();
          await page.getByRole("textbox", { name: "URL" }).fill(targetServerUrl);
          await page.getByRole("button", { name: "Connect" }).click();
 
